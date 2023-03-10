@@ -1,0 +1,6 @@
+pipex
+printf/build
+libft/*.o
+libft/libft.a
+printf/libftprintf.a
+build/
