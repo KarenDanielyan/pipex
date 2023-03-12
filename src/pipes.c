@@ -1,20 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.h                                            :+:      :+:    :+:   */
+/*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/09 19:00:47 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/12 17:03:34 by kdaniely         ###   ########.fr       */
+/*   Created: 2023/03/12 19:15:09 by kdaniely          #+#    #+#             */
+/*   Updated: 2023/03/12 19:53:04 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSE_H
-# define PARSE_H
+#include "pipex.h"
+#include <stdio.h>
 
-# include <libft.h>
+#define EXIT_FAILURE 1
 
-void	parse(int ac, char **av, t_list **queue);
-
-#endif
+t_pipe	get_pipe()
+{
+	/* fd[0] read and fd[1] write */
+	int	fd[2];
+	t_pipe	pip;
+	
+	if (pipe(fd) == -1)
+	{
+		perror("pipe: ");
+		exit(EXIT_FAILURE);
+	}
+	pip.in = fd[0];
+	pip.out = fd[1];
+	return (pip);
+}

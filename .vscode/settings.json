@@ -60,5 +60,9 @@
     "**/.vscode",
     "**/.vscode/**"
   ],
-  "cmake.configureOnOpen": false
+  "cmake.configureOnOpen": false,
+  "files.associations": {
+    "_types.h": "c",
+    "stddef.h": "c"
+  }
 }

@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 22:21:00 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/02/22 14:08:34 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/11 16:28:11 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,6 @@
 
 # include <stdlib.h>
 # include <unistd.h>
-# include <stddef.h>
-# include <string.h> /* NOTE: On Mac "bsd/" is not neccesary. */
-# include <limits.h>
-# include <errno.h>
 
 typedef struct s_list
 {

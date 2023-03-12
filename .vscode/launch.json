@@ -2,14 +2,21 @@
   "version": "0.1.0",
   "configurations": [
     {
+      "name": "(lldb) Attach",
+      "type": "cppdbg",
+      "request": "attach",
+      "program": "${workspaceFolder}/pipex",
+      "MIMode": "lldb",
+    },
+    {
       "name": "OSX Launch",
       "type": "cppdbg",
       "request": "launch",
       "program": "${workspaceFolder}/pipex",
-      "args": [],
+      "args": ["bobo", "wc -l", "keke"],
       "stopAtEntry": false,
       "cwd": "${fileDirname}",
-      "environment": [],
+      "environment": [{ "name": "config", "value": "/usr/bin/env" }],
       "externalConsole": false,
       "MIMode": "lldb"
     },
