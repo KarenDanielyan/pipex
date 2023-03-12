@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:11:53 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/12 21:30:11 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/12 21:39:00 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ static char	**get_path(char **envp)
 	while (*(envp + i))
 	{
 		if (ft_strncmp(*(envp + i), "PATH=", 5) == 0)
+		{
+			path = *(envp + i);
 			break;
+		}
 		i ++;
 	}
 	if (path == NULL)
@@ -43,17 +46,21 @@ static char	**get_path(char **envp)
 
 static	char	*get_exec(char **path, char *cmd)
 {
+	char	*cmd_w_slash;
 	char	*join;
 
+	cmd_w_slash = ft_strjoin("/", cmd);
 	while (path) 
 	{
-		join = ft_strjoin(*path, cmd);
+		join = ft_strjoin(*path, cmd_w_slash);
 		if (access(join, X_OK) == 0)
-			return (join);
+			break;
 		path ++;
 		free(join);
+		join = NULL;
 	}
-	return (NULL);
+	free(cmd_w_slash);
+	return (join);
 }
 
 
@@ -64,5 +71,7 @@ int	main(int ac, char **av, char **envp)
 	int	i;
 
 	path = get_path(envp);
-	system("leaks pipex");
+	ls = get_exec(path, "ls");
+	ft_printf("%s\n", ls);
+	//system("leaks pipex");
 }
