@@ -18,7 +18,7 @@ CC 			= 	cc
 
 RM			=	rm -rf
 
-CFLAGS		=	-g3 # -Wall -Wextra -Werror
+CFLAGS		=	-g3 -fsanitize=address #-Wall -Wextra -Werror
 
 LFLAGS		=	-L./libft -lft -L./printf -lftprintf
 

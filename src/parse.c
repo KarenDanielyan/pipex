@@ -6,13 +6,14 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:55:05 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/12 17:16:30 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/13 16:15:01 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_printf.h>
 #include <errno.h>
 #include "parse.h"
+#include "pipex.h"
 
 #define EINARG	"Argument list too short."
 
@@ -46,4 +47,17 @@ void	parse(int ac, char **av, t_list **queue)
 		exit(EXIT_FAILURE);
 	}
 	get_args(ac, av, queue);
+}
+
+t_type	get_arg_type(char **av)
+{
+	int	len;
+
+	len = ft_strlen_2d((const char **)av);
+	if (len > 1)
+		return (COMMAND);
+	else if (len == 1 && ft_strncmp(*av, "here_doc", 8) == 0)
+		return (HERE_DOC);
+	else
+		return (FIL);
 }

@@ -1,35 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_strlen_2d.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/12 19:12:18 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/13 16:07:52 by kdaniely         ###   ########.fr       */
+/*   Created: 2023/03/13 16:10:41 by kdaniely          #+#    #+#             */
+/*   Updated: 2023/03/13 16:12:07 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-
-typedef struct s_pipe
+int	ft_strlen_2d(const char **s)
 {
-	int	in;
-	int	out;
-}	t_pipe;
+	int	i;
 
-typedef enum	e_type
-{
-	FIL,
-	COMMAND,
-	HERE_DOC
-}	t_type;
-
-t_pipe	get_pipe(void);
-t_type	get_arg_type(char **av);
-
-#endif
+	i = 0;
+	while (*(s + i))
+		i ++;
+	return (i);
+}

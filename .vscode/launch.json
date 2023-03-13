@@ -13,10 +13,10 @@
       "type": "cppdbg",
       "request": "launch",
       "program": "${workspaceFolder}/pipex",
-      "args": ["bobo", "wc -l", "keke"],
+      "args": ["bobo", "ls -l", "wc -l", "keke"],
       "stopAtEntry": false,
-      "cwd": "${fileDirname}",
-      "environment": [{ "name": "config", "value": "/usr/bin/env" }],
+      "cwd": "${workspaceFolder}",
+      "environment": [{ "name": "config", "value": "debug" }],
       "externalConsole": false,
       "MIMode": "lldb"
     },
