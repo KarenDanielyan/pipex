@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 13:44:29 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/13 16:44:39 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/13 20:25:54 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 #include <ft_printf.h>
 #include "parse.h"
 
-char	*get_exec(char **path, char *cmd)
+char	*get_file_path(char **path, char *file)
 {
-	char	*cmd_w_slash;
+	char	*file_w_slash;
 	char	*join;
 
-	cmd_w_slash = ft_strjoin("/", cmd);
-	while (path) 
+	file_w_slash = ft_strjoin("/", file);
+	while (path)
 	{
-		join = ft_strjoin(*path, cmd_w_slash);
+		join = ft_strjoin(*path, file_w_slash);
 		if (access(join, X_OK) == 0)
 			break;
 		path ++;
 		free(join);
 		join = NULL;
 	}
-	free(cmd_w_slash);
+	free(file_w_slash);
 	return (join);
 }
 

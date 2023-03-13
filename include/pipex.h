@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 19:12:18 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/13 16:07:52 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/13 20:20:35 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,22 @@
 # include <unistd.h>
 # include <stdlib.h>
 
+# ifndef BONUS
+#  define BONUS 0
+# endif
+
 typedef struct s_pipe
 {
 	int	in;
 	int	out;
 }	t_pipe;
+
+typedef struct s_process
+{
+	char	*path;
+	char	**command;
+}	t_process;
+
 
 typedef enum	e_type
 {
