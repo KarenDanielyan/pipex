@@ -43,12 +43,12 @@ libft:
 printf:
 		@$(MAKE) $(MAKECMDGOALS) -C printf
 
-clean:
+clean:		printf libft
 				@echo "Cleaning Build..."
 				@$(RM) $(BUILD)
 				@echo "Done."
 
-fclean:		printf libft clean
+fclean:		clean
 				@echo "Cleaning Everyting..."
 				@$(RM) $(NAME)
 				@echo "Done."

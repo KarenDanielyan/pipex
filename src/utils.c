@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 13:44:29 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/13 20:25:54 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/14 21:53:49 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,13 @@ char	*get_file_path(char **path, char *file)
 	char	*file_w_slash;
 	char	*join;
 
+	if (access(file, X_OK) == 0)
+		return (file);
 	file_w_slash = ft_strjoin("/", file);
 	while (path)
 	{
 		join = ft_strjoin(*path, file_w_slash);
-		if (access(join, X_OK) == 0)
+		if (access(join, X_OK) == 0 || !join)
 			break;
 		path ++;
 		free(join);

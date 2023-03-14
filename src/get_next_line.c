@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include "parse.h"
 
 static void	free_feed(char *line_feed[OPEN_MAX])
 {
@@ -41,11 +42,11 @@ static char	*feed(int fd, char *line_feed)
 		}
 		buf[r_size] = '\0';
 		if (!line_feed)
-			join = ft_strdup(buf);
+			join = gnl_strdup(buf);
 		else
-			join = ft_strjoin (line_feed, buf);
+			join = gnl_strjoin(line_feed, buf);
 		line_feed = join;
-		if (ft_strchr(line_feed, '\n') || r_size == 0)
+		if (gnl_strchr(line_feed, '\n') || r_size == 0)
 			break ;
 	}
 	return (line_feed);
@@ -68,11 +69,11 @@ char	*get_next_line(int fd)
 	line_feed[fd] = feed(fd, line_feed[fd]);
 	if (!line_feed[fd])
 		return (NULL);
-	len = ft_strchr(line_feed[fd], '\n') - line_feed[fd];
-	str = ft_substr(line_feed[fd], 0, len + 1);
+	len = gnl_strchr(line_feed[fd], '\n') - line_feed[fd];
+	str = gnl_substr(line_feed[fd], 0, len + 1);
 	to_free = line_feed[fd];
-	line_feed[fd] = ft_substr(line_feed[fd], len + 1,
-			(ft_strlen(line_feed[fd]) - len));
+	line_feed[fd] = gnl_substr(line_feed[fd], len + 1,
+			(gnl_strlen(line_feed[fd]) - len));
 	free(to_free);
 	return (str);
 }

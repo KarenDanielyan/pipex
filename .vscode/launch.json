@@ -13,7 +13,7 @@
       "type": "cppdbg",
       "request": "launch",
       "program": "${workspaceFolder}/pipex",
-      "args": ["bobo", "ls -l", "wc -l", "keke"],
+      "args": ["koko", "wc -l", "toto"],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
       "environment": [{ "name": "config", "value": "debug" }],

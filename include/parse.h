@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 19:00:47 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/13 20:17:20 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/14 21:51:20 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,7 @@ char	**get_path(char **envp);
 char	*read_file(int fd);
 
 char	*get_next_line(int fd);
+
+char	*get_file_path(char **path, char *file);
+
 #endif

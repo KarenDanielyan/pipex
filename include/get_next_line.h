@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 17:25:53 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/13 15:53:31 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/14 21:57:35 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@
 #  define OPEN_MAX 0xFFFF
 # endif
 
-size_t	ft_strlen(const char *s);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
-char	*ft_strchr(const char *str, int c);
-char	*ft_strdup(const char *s);
-char	*ft_strjoin(char *s1, char *s2);
+size_t	gnl_strlen(const char *s);
+char	*gnl_substr(char const *s, unsigned int start, size_t len);
+char	*gnl_strchr(const char *str, int c);
+char	*gnl_strdup(const char *s);
+char	*gnl_strjoin(char *s1, char *s2);
 
 /*
 *	Reference: DNE

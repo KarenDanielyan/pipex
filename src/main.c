@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:11:53 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/13 20:35:11 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/14 22:34:05 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,58 @@ static void	redirect_io(int ac, char **av)
 	dup2(fd[1], STDOUT_FILENO);
 }
 
+static void	execute_pipe(char **cmd, char *path, char **envp)
+{
+	int		pid;
+	t_pipe	pipe;
+
+	pipe = get_pipe();
+	pid = fork();
+	if (pid)
+	{
+		close(pipe.out);
+		dup2(pipe.in, STDIN_FILENO);
+		wait(NULL);
+	}
+	else
+	{
+		close(pipe.in);
+		dup2(pipe.out, STDOUT_FILENO);
+		if (execve(path, cmd, envp) == -1)
+		{
+			perror("execve: ");
+			exit(EXIT_FAILURE);
+		}
+		else
+			exit(EXIT_SUCCESS);
+	}
+}
+
+static void	loop(int ac, char **av, char **envp, char **path)
+{
+	int	i;
+	char	**cmd;
+	char	*bin_path;
+
+	i = 2;
+	while (i < (ac - 1))
+	{
+		cmd = ft_split(*(av + i), ' ');
+		bin_path = get_file_path(path, *cmd);
+		execute_pipe(cmd, bin_path, envp);
+		i ++;
+		free(bin_path);
+		free(cmd);		//TODO: Add 2d split
+	}
+}
+
 int	main(int ac, char **av, char **envp)
 {
-	char **cmd = ft_split("wc -l", ' ');
+	char	**path;
+
+	path = get_path(envp);
 	redirect_io(ac, av);
-	execve("/usr/bin/wc", cmd, envp);
+	execute_pipe(ft_split("wc -l", ' '), "/usr/bin/wc", envp);
+	//loop(ac, av, envp, path);
 	return (0);
 }

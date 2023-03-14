@@ -6,13 +6,13 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 20:15:49 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/13 16:43:28 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/14 21:59:23 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *s)
+size_t	gnl_strlen(const char *s)
 {
 	size_t	len;
 
@@ -25,13 +25,13 @@ size_t	ft_strlen(const char *s)
 	return (len);
 }
 
-char	*ft_strdup(const char *s)
+char	*gnl_strdup(const char *s)
 {
 	char	*dup;
 	int		i;
 
 	i = 0;
-	dup = malloc((ft_strlen(s) + 1) * sizeof(char));
+	dup = malloc((gnl_strlen(s) + 1) * sizeof(char));
 	if (!dup || !s)
 		return (NULL);
 	while (*(s + i))
@@ -43,7 +43,7 @@ char	*ft_strdup(const char *s)
 	return (dup);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*gnl_substr(char const *s, unsigned int start, size_t len)
 {
 	char		*str;
 	size_t		range;
@@ -51,7 +51,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 	if (!s || !(*s))
 		return (NULL);
-	i = ft_strlen(s);
+	i = gnl_strlen(s);
 	range = 0;
 	if (start < i)
 		range = i - start;
@@ -70,7 +70,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (str);
 }
 
-char	*ft_strchr(const char *str, int c)
+char	*gnl_strchr(const char *str, int c)
 {
 	char	*buf;
 
@@ -89,7 +89,7 @@ char	*ft_strchr(const char *str, int c)
 		return (NULL);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*gnl_strjoin(char *s1, char *s2)
 {
 	size_t	len1;
 	size_t	len2;
@@ -98,8 +98,8 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	if (!s2)
 		return (NULL);
-	len1 = ft_strlen(s1);
-	len2 = ft_strlen(s2);
+	len1 = gnl_strlen(s1);
+	len2 = gnl_strlen(s2);
 	join = (char *)malloc((len1 + len2 + 1) * sizeof(char));
 	if (!join)
 		return (NULL);
