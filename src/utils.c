@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 13:44:29 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/14 21:53:49 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/15 19:47:32 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,48 +61,4 @@ char	**get_path(char **envp)
 	split = ft_split(path, ':');
 	free(path);
 	return (split);
-}
-
-void	fork_in_main(t_list **pid_l)
-{
-	t_list	*head;
-	int	*n;
-
-	head = *pid_l;
-	if (head)
-	{
-		if (ft_lstsize(head) >= 1 && *((int *)(head->content)) != 0)
-		{
-			n = malloc(sizeof(int));
-			*n = fork();
-			ft_lstadd_back(pid_l, ft_lstnew(n));
-		}
-	}
-	else
-	{
-		n = malloc(sizeof(int));
-		*n = fork();
-		ft_lstadd_back(pid_l, ft_lstnew(n));
-	}
-}
-
-char	*read_file(int	fd)
-{
-	char	*content;
-	char	*tmp;
-	
-	tmp = get_next_line(fd);
-	content = NULL;
-	while (tmp)
-	{
-		if (content)
-		{
-			content = ft_strjoin(content, tmp);
-			free(tmp);
-		}
-		else
-			content = tmp;
-		tmp = get_next_line(fd);
-	}
-	return (content);
 }
