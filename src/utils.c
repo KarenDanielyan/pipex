@@ -5,15 +5,15 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/13 13:44:29 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/16 16:08:39by kdaniely         ###   ########.fr       */
+/*   Created: 2023/03/16 18:41:25 by kdaniely          #+#    #+#             */
+/*   Updated: 2023/03/16 20:09:27 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
 #include <ft_printf.h>
-#include "parse.h"
+#include <libft.h>
 #include "pipex.h"
+#include "parse.h"
 
 char	*get_file_path(char **path, char *file)
 {
@@ -27,7 +27,7 @@ char	*get_file_path(char **path, char *file)
 	{
 		join = ft_strjoin(*path, file_w_slash);
 		if (access(join, X_OK) == 0 || !join)
-			break;
+			break ;
 		path ++;
 		free(join);
 		join = NULL;
@@ -41,21 +41,22 @@ char	**get_path(char **envp)
 	char	*path;
 	char	**split;
 	int		i;
-	int		len;
 
 	i = 0;
+	path = NULL;
 	while (*(envp + i))
 	{
 		if (ft_strncmp(*(envp + i), "PATH=", 5) == 0)
 		{
 			path = *(envp + i);
-			break;
+			break ;
 		}
 		i ++;
 	}
 	if (path == NULL)
 	{
 		ft_printf("Error: no PATH variable in env!!\n");
+		system("leaks pipex");
 		exit(EXIT_FAILURE);
 	}
 	path = ft_strtrim(path, "PATH=");
@@ -77,33 +78,35 @@ void	free_2d(char **ptr)
 	free(ptr);
 }
 
-t_process	get_process(char **path, char *av)
-{
-	char	**cmd;
-	char	*path_to;
-	t_process	process;
-	
-	cmd = ft_split(av, ' ');
-	if (!cmd)
-	{
-		perror("Malloc ");
-		exit(EXIT_FAILURE);
-	}
-	path_to = get_file_path(path, cmd[0]);
-	if (!path_to)
-	{
-		perror("Access: ");
-		exit(EXIT_FAILURE);
-	}
-	process.cmd = cmd;
-	process.path = path_to;
-	return (process);
-}
-
 void	proc_zero(t_process *proc)
 {
 	free(proc->path);
 	free_2d(proc->cmd);
 	proc->cmd = NULL;
 	proc->path = NULL;
+}
+
+t_process	get_process(char **path, char *av)
+{
+	char		**cmd;
+	char		*path_to;
+	t_process	process;
+
+	cmd = ft_split(av, ' ');
+	if (!cmd)
+	{
+		perror("Malloc ");
+		system("leaks pipex");
+		exit(EXIT_FAILURE);
+	}
+	path_to = get_file_path(path, cmd[0]);
+	if (!path_to)
+	{
+		perror("Access: ");
+		system("leaks pipex");
+		exit(EXIT_FAILURE);
+	}
+	process.cmd = cmd;
+	process.path = path_to;
+	return (process);
 }

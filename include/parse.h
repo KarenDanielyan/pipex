@@ -6,26 +6,22 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 19:00:47 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/16 18:11:05 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/16 18:27:42 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSE_H
 # define PARSE_H
 
-# include <libft.h>
-
-void	parse(int ac, char **av, t_list **queue);
-
-/* Utility functions */
 /*
-*	Decription:	get_exec() finds specified command,
+*	Decription:	get_file_path() finds specified command/file,
 *	by combining it with paths specified in PATH variable,
 *	to see if file like this exists and is an executable.
 *
 *	Return Value: path to the executable, or NULL if there is none.
 */
-char	*get_exec(char **path, char *cmd);
+char	*get_file_path(char **path, char *file);
+
 /*
 *	Description: get_path() extracts PATH variable from env.
 *
@@ -35,12 +31,11 @@ char	*get_exec(char **path, char *cmd);
 */
 char	**get_path(char **envp);
 
-char	*read_file(int fd);
-
-char	*get_next_line(int fd);
-
-char	*get_file_path(char **path, char *file);
-
+/* Helper Functions */
+/*
+*	Description: free_2d() frees a 2-dimensional array
+*	pointed by ptr.
+*/
 void	free_2d(char **ptr);
 
 #endif

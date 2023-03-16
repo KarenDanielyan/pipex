@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 19:12:18 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/16 16:23:30 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/16 20:09:46 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,14 @@ typedef struct s_process
 	char	**cmd;
 }	t_process;
 
-t_pipe		get_pipe(void);
+/* Main logic */
+void		redirect_io(int ac, char **av);
+void		loop(int ac, char **av, char **envp, char **path);
+
+/* Command execution and Piping */
+void		execute_command(char **cmd, char *path, char **envp);
+void		proc_zero(t_process *proc);
+
 t_process	get_process(char **path, char *av);
-void	proc_zero(t_process *proc);
 
 #endif

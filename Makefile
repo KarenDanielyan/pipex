@@ -18,7 +18,7 @@ CC 			= 	cc
 
 RM			=	rm -rf
 
-CFLAGS		=	-g3 #-fsanitize=address #-Wall -Wextra -Werror
+CFLAGS		=	-g -fsanitize=address -Wall -Wextra -Werror
 
 LFLAGS		=	-L./libft -lft -L./printf -lftprintf
 
@@ -55,6 +55,4 @@ fclean:		clean
 
 re:			fclean all
 
-bonus:		$(BONUS)
-
-.PHONY:		all bonus clean fclean re libft printf
+.PHONY:		all clean fclean re libft printf
