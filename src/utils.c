@@ -6,13 +6,14 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 13:44:29 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/15 19:47:32 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/16 16:08:39by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include <ft_printf.h>
 #include "parse.h"
+#include "pipex.h"
 
 char	*get_file_path(char **path, char *file)
 {
@@ -61,4 +62,47 @@ char	**get_path(char **envp)
 	split = ft_split(path, ':');
 	free(path);
 	return (split);
+}
+
+void	free_2d(char **ptr)
+{
+	int	i;
+
+	while (*(ptr + i))
+	{
+		free(*(ptr + i));
+		i ++;
+	}
+	free(ptr);
+}
+
+t_process	get_process(char **path, char *av)
+{
+	char	**cmd;
+	char	*path_to;
+	t_process	process;
+	
+	cmd = ft_split(av, ' ');
+	if (!cmd)
+	{
+		perror("Malloc ");
+		exit(EXIT_FAILURE);
+	}
+	path_to = get_file_path(path, cmd[0]);
+	if (!path_to)
+	{
+		perror("Access: ");
+		exit(EXIT_FAILURE);
+	}
+	process.cmd = cmd;
+	process.path = path_to;
+	return (process);
+}
+
+void	proc_zero(t_process *proc)
+{
+	free(proc->path);
+	free_2d(proc->cmd);
+	proc->cmd = NULL;
+	proc->path = NULL;
 }

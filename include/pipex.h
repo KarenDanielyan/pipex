@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 19:12:18 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/13 20:20:35 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/16 16:23:30 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,11 @@ typedef struct s_pipe
 typedef struct s_process
 {
 	char	*path;
-	char	**command;
+	char	**cmd;
 }	t_process;
 
-
-typedef enum	e_type
-{
-	FIL,
-	COMMAND,
-	HERE_DOC
-}	t_type;
-
-t_pipe	get_pipe(void);
-t_type	get_arg_type(char **av);
+t_pipe		get_pipe(void);
+t_process	get_process(char **path, char *av);
+void	proc_zero(t_process *proc);
 
 #endif
