@@ -6,13 +6,14 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:11:53 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/16 17:42:59 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/16 18:10:13 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_printf.h>
 #include <libft.h>
 #include <fcntl.h>
+#include <sys/wait.h>
 #include <string.h>
 #include "parse.h"
 #include "pipex.h"
@@ -94,7 +95,7 @@ int	main(int ac, char **av, char **envp)
 	path = get_path(envp);
 	redirect_io(ac, av);
 	loop(ac, av, envp, path);
-	
+	free_2d(path);	
 	/*
 	t_pipe	pipe = get_pipe();
 	pid = fork();

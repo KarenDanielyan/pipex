@@ -68,6 +68,7 @@ void	free_2d(char **ptr)
 {
 	int	i;
 
+	i = 0;
 	while (*(ptr + i))
 	{
 		free(*(ptr + i));
