@@ -63,6 +63,16 @@
   "cmake.configureOnOpen": false,
   "files.associations": {
     "_types.h": "c",
-    "stddef.h": "c"
+    "stddef.h": "c",
+    "parse.h": "c",
+    "time.h": "c",
+    "pipex.h": "c",
+    "__hash_table": "c",
+    "__string": "c",
+    "algorithm": "c",
+    "functional": "c",
+    "locale": "c",
+    "utility": "c",
+    "fcntl.h": "c"
   }
 }

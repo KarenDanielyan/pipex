@@ -18,11 +18,15 @@ CC 			= 	cc
 
 RM			=	rm -rf
 
-CFLAGS		=	-g -fsanitize=address -Wall -Wextra -Werror
+CF			=	-g -fsanitize=address -Wall -Wextra -Werror
+
+CFLAGS		=	$(if $(filter bonus, $(MAKECMDGOALS)), $(CF) -D BONUS, $(CF))
 
 LFLAGS		=	-L./libft -lft -L./printf -lftprintf
 
 IFLAGS		=	-I./include -I./libft -I./printf/include
+
+MGOALS		=	$(filter-out bonus, $(MAKECMDGOALS))
 
 $(BUILD)/%.o: $(SRC)/%.c $(DEP)
 				@$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
@@ -38,10 +42,12 @@ $(NAME):	$(BUILD) $(OBJS)
 				@echo	"Build Successfull."
 
 libft:
-		@$(MAKE) $(MAKECMDGOALS) -C libft
+		@$(MAKE) $(MGOALS) -C libft
 
 printf:
-		@$(MAKE) $(MAKECMDGOALS) -C printf
+		@$(MAKE) $(MGOALS) -C printf
+
+bonus:		libft printf $(NAME)
 
 clean:		printf libft
 				@echo "Cleaning Build..."
@@ -55,4 +61,4 @@ fclean:		clean
 
 re:			fclean all
 
-.PHONY:		all clean fclean re libft printf
+.PHONY:		all clean fclean re libft printf bonus

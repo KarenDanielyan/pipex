@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 22:21:00 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/13 16:11:47 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/21 18:45:33 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int		ft_isprint(int c);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
 int		ft_atoi(const char *str);
+int		ft_strcmp(const char *s1, const char *s2);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
 int		ft_strncmp(const char *s1, const char *s2, size_t size);
 int		ft_strlen_2d(const char **s);

@@ -1,25 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   here_doc_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/09 18:11:53 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/21 22:15:04 by kdaniely         ###   ########.fr       */
+/*   Created: 2023/03/21 22:23:36 by kdaniely          #+#    #+#             */
+/*   Updated: 2023/03/21 22:23:58 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parse.h"
-#include "pipex.h"
+#ifdef BONUS
 
-int	main(int ac, char **av, char **envp)
-{
-	char	**path;
+// Put here_doc handler function here.
 
-	path = get_path(envp);
-	parse(ac, av);
-	loop(ac, av, envp, path);
-	free_2d(path);
-	return (0);
-}
+#endif

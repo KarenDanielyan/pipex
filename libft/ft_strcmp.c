@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/09 18:11:53 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/21 22:15:04 by kdaniely         ###   ########.fr       */
+/*   Created: 2023/03/21 18:43:31 by kdaniely          #+#    #+#             */
+/*   Updated: 2023/03/21 18:44:55 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parse.h"
-#include "pipex.h"
+#include "libft.h"
 
-int	main(int ac, char **av, char **envp)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	char	**path;
+	char	*c1;
+	char	*c2;
 
-	path = get_path(envp);
-	parse(ac, av);
-	loop(ac, av, envp, path);
-	free_2d(path);
+	c1 = (char *)s1;
+	c2 = (char *)s2;
+	while (c1 || c2)
+	{
+		if (*c1 != *c2)
+			return ((unsigned char)(*c1 - *c2));
+		c1 ++;
+		c2 ++;
+	}
 	return (0);
 }

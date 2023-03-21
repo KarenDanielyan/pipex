@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 19:12:18 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/16 20:09:46 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/21 22:09:13 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,23 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-# ifndef BONUS
-#  define BONUS 0
-# endif
-
+/*
+*	pipe(fd) writes in fd[2] input and output file
+*	descriptors. To not address in and out as fd[0]
+*	and fd[1] we will save them into this structure.
+*	This makes code look more human readable.
+*/
 typedef struct s_pipe
 {
 	int	in;
 	int	out;
 }	t_pipe;
 
+/*
+*	Process structure to contain path to executable
+*	and command arguments. Point is to make code more
+*	human readable.
+*/
 typedef struct s_process
 {
 	char	*path;
