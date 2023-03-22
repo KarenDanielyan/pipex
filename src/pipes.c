@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 19:15:09 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/21 22:11:05 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/22 17:56:16 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ t_pipe	get_pipe(void)
 	if (pipe(fd) == -1)
 	{
 		perror("pipe: ");
-		system("leaks pipex");
 		exit(EXIT_FAILURE);
 	}
 	pip.in = fd[0];
@@ -43,7 +42,6 @@ void	redirect_io(int ac, char **av)
 	if (fd[0] == -1 || fd[1] == -1)
 	{
 		perror("Open: ");
-		system("leaks pipex");
 		exit(EXIT_FAILURE);
 	}
 	dup2(fd[0], STDIN_FILENO);
@@ -56,7 +54,6 @@ void	execute_command(char **cmd, char *path, char **envp)
 {
 	t_pipe	pipe;
 	int		pid;
-	int		status;
 
 	pipe = get_pipe();
 	pid = fork();
@@ -65,12 +62,7 @@ void	execute_command(char **cmd, char *path, char **envp)
 		close(pipe.out);
 		dup2(pipe.in, STDIN_FILENO);
 		close(pipe.in);
-		wait(&status);
-		if (status == 1)
-		{
-			ft_printf("Execve: %s\n", strerror(status));
-			exit(EXIT_FAILURE);
-		}
+		wait(NULL);
 	}
 	else
 	{

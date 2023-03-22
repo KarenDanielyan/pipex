@@ -10,9 +10,20 @@ SRC_B		=	./src_b
 
 DEP			=	$(wildcard include/*.h) Makefile
 
-SOURCES		=	$(wildcard $(SRC)/*.c)
+SCS			=	main.c pipes.c utils_1.c utils_2.c \
+				utils.c
 
-OBJS		=	$(patsubst $(SRC)/%.c, $(BUILD)/%.o, $(SOURCES))
+SCS_B		=	here_doc_bonus.c
+
+SRCS		=	$(patsubst %.c, $(SRC)/%.c, $(SCS))
+
+SRCS_B		=	$(patsubst %.c, $(SRC)/%.c, $(SCS_B))
+
+OBJS		=	$(patsubst $(SRC)/%.c, $(BUILD)/%.o, $(SRCS))
+
+OBJS_B		=	$(patsubst $(SRC)/%.c, $(BUILD)/%.o, $(SRCS_B))
+
+TO_BUILD	=	$(if $(filter bonus, $(MAKECMDGOALS)), $(OBJS) $(OBJS_B), $(OBJS))
 
 CC 			= 	cc
 
@@ -29,16 +40,17 @@ IFLAGS		=	-I./include -I./libft -I./printf/include
 MGOALS		=	$(filter-out bonus, $(MAKECMDGOALS))
 
 $(BUILD)/%.o: $(SRC)/%.c $(DEP)
-				@$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
+				$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 
 all:		libft printf $(NAME)
 
 $(BUILD):
 				@mkdir $(BUILD)
 
-$(NAME):	$(BUILD) $(OBJS)
+$(NAME):	$(BUILD) $(TO_BUILD)
 				@echo	"Building ..."
-				@$(CC) $(CFLAGS) $(OBJS) $(IFLAGS) $(LFLAGS) -o $(NAME)
+				@echo	$(TO_BUILD)
+				@$(CC) $(CFLAGS) $(TO_BUILD) $(IFLAGS) $(LFLAGS) -o $(NAME)
 				@echo	"Build Successfull."
 
 libft:
