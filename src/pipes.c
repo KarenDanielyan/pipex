@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 19:15:09 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/23 19:28:47 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/24 01:00:23 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	execute_command(char **cmd, char *path, char **envp)
 	}
 }
 
-# ifndef BONUS
 void	loop(int ac, char **av, char **envp, char **path)
 {
 	int			i;
@@ -92,55 +91,3 @@ void	redirect_io(int ac, char **av)
 	close(fd[0]);
 	close(fd[1]);
 }
-#else
-
-void	loop(int ac, char **av, char **envp, char **path)
-{
-	int			i;
-	int			pid;
-	t_process	proc;
-
-	if (get_type(*(av + 1), path) == HDOC)
-		i = 3;
-	else
-		i = 2;
-	while (i < (ac - 1))
-	{
-		proc = get_process(path, av[i]);
-		if (i < (ac - 2))
-			execute_command(proc.cmd, proc.path, envp);
-		else
-		{
-			pid = fork();
-			if (!pid)
-				exit(execve(proc.path, proc.cmd, envp));
-		}
-		proc_zero(&proc);
-		i ++;
-	}
-}
-
-void	redirect_io(int ac, char **av, char **path)
-{
-	int	fd[2];
-	if (get_type(*(av + 1), path) == HDOC)
-	{
-		fd[0] = open(HDOC_FILE, O_RDONLY);
-		fd[1] = open(*(av + ac -1), O_WRONLY | O_APPEND | O_CREAT, 0600);
-	}
-	else
-	{
-		fd[0] = open(*(av + 1), O_RDONLY);
-		fd[1] = open(*(av + ac -1), O_WRONLY | O_CREAT, 0600);
-	}
-	if (fd[0] == -1 || fd[1] == -1)
-	{
-		perror("Open: ");
-		exit(EXIT_FAILURE);
-	}
-	dup2(fd[0], STDIN_FILENO);
-	dup2(fd[1], STDOUT_FILENO);
-	close(fd[0]);
-	close(fd[1]);
-}
-#endif
