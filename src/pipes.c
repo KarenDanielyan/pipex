@@ -6,13 +6,14 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 19:15:09 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/23 20:44:41 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/24 00:55:47 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 #include "parse.h"
 #include <fcntl.h>
+#include <sys/wait.h>
 
 t_pipe	get_pipe(void)
 {
