@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 19:12:18 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/23 19:22:04 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/23 21:37:44 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # ifdef BONUS
 #  define HDOC_FILE	"./hdoc_tmp"
 
-void	hdoc_checker(int ac, char **av);
-void	hdoc_handler(char *limiter);
+void		hdoc_checker(int ac, char **av);
+void		hdoc_handler(char *limiter);
 # endif
 
 /*
@@ -49,10 +49,13 @@ typedef struct s_process
 
 /* Main logic */
 # ifndef BONUS
+
 void		redirect_io(int ac, char **av);
 # else
+
 void		redirect_io(int ac, char **av, char **path);
 # endif
+
 void		loop(int ac, char **av, char **envp, char **path);
 
 /* Command execution and Piping */

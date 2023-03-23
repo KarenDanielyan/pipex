@@ -6,15 +6,14 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 22:23:36 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/23 19:42:44 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/23 21:30:12 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifdef BONUS
-# include "pipex.h"
-# include "parse.h"
-# include "get_next_line_bonus.h"
-# include <fcntl.h>
+#include "pipex.h"
+#include "parse.h"
+#include "get_next_line_bonus.h"
+#include <fcntl.h>
 
 #define INVAL_LIMIT		"Error: Invalid Limiter for here_doc.\n"
 #define INTERNAL_MSG	"Internal Error: Unable to perform here_doc.\n"
@@ -29,6 +28,23 @@ void	hdoc_checker(int ac, char **av)
 	}
 }
 
+static void	arg_check(int limit_len, int fd)
+{
+	if (limit_len == 0 || fd == -1)
+	{
+		if (limit_len == 0)
+			ft_putstr_fd(INVAL_LIMIT, STDERR_FILENO);
+		if (fd == -1)
+			ft_putstr_fd(INTERNAL_MSG, STDERR_FILENO);
+		if (fd != -1)
+		{
+			close(fd);
+			unlink(HDOC_FILE);
+		}
+		exit(EXIT_FAILURE);
+	}
+}
+
 void	hdoc_handler(char *limiter)
 {
 	int		fd;
@@ -37,15 +53,7 @@ void	hdoc_handler(char *limiter)
 
 	fd = open(HDOC_FILE, O_RDWR | O_APPEND | O_CREAT, 0600);
 	limit_len = ft_strlen(limiter);
-	if (limit_len == 0 || fd == -1)
-	{
-		if (limit_len == 0)
-			ft_putstr_fd(INVAL_LIMIT, STDERR_FILENO);
-		if (fd == -1)
-			ft_putstr_fd(INTERNAL_MSG, STDERR_FILENO);
-		unlink(HDOC_FILE);
-		exit(EXIT_FAILURE);
-	}
+	arg_check(limit_len, fd);
 	str = get_next_line(STDIN_FILENO);
 	while (str != NULL && ft_strncmp(str, limiter, (ft_strlen(str) - 1)) != 0)
 	{
@@ -57,4 +65,3 @@ void	hdoc_handler(char *limiter)
 		free(str);
 	close(fd);
 }
-#endif

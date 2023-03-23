@@ -6,10 +6,9 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 17:25:53 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/23 18:21:54 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/23 21:40:08 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef GET_NEXT_LINE_BONUS_H
 # define GET_NEXT_LINE_BONUS_H

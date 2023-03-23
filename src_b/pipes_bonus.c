@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipes.c                                            :+:      :+:    :+:   */
+/*   pipes_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/12 19:15:09 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/23 20:44:41 by kdaniely         ###   ########.fr       */
+/*   Created: 2023/03/23 20:44:19 by kdaniely          #+#    #+#             */
+/*   Updated: 2023/03/23 21:39:03 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,10 @@ void	loop(int ac, char **av, char **envp, char **path)
 	int			pid;
 	t_process	proc;
 
-	i = 2;
+	if (get_type(*(av + 1), path) == HDOC)
+		i = 3;
+	else
+		i = 2;
 	while (i < (ac - 1))
 	{
 		proc = get_process(path, av[i]);
@@ -75,12 +78,20 @@ void	loop(int ac, char **av, char **envp, char **path)
 	}
 }
 
-void	redirect_io(int ac, char **av)
+void	redirect_io(int ac, char **av, char **path)
 {
 	int	fd[2];
 
-	fd[0] = open(av[1], O_RDONLY);
-	fd[1] = open(av[ac - 1], O_WRONLY | O_CREAT, 0600);
+	if (get_type(*(av + 1), path) == HDOC)
+	{
+		fd[0] = open(HDOC_FILE, O_RDONLY);
+		fd[1] = open(*(av + ac -1), O_WRONLY | O_APPEND | O_CREAT, 0600);
+	}
+	else
+	{
+		fd[0] = open(*(av + 1), O_RDONLY);
+		fd[1] = open(*(av + ac -1), O_WRONLY | O_CREAT, 0600);
+	}
 	if (fd[0] == -1 || fd[1] == -1)
 	{
 		perror("Open: ");
