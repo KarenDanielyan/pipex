@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 18:43:31 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/21 18:44:55 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/23 18:48:51 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_strcmp(const char *s1, const char *s2)
 
 	c1 = (char *)s1;
 	c2 = (char *)s2;
-	while (c1 || c2)
+	while (*c1 || *c2)
 	{
 		if (*c1 != *c2)
 			return ((unsigned char)(*c1 - *c2));

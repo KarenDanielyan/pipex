@@ -73,6 +73,8 @@
     "functional": "c",
     "locale": "c",
     "utility": "c",
-    "fcntl.h": "c"
+    "fcntl.h": "c",
+    "chrono": "c",
+    "get_next_line.h": "c"
   }
 }
