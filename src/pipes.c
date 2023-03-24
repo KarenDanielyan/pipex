@@ -6,13 +6,20 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 19:15:09 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/24 20:27:43 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/24 20:55:37 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 #include "parse.h"
 #include <fcntl.h>
+
+struct	s_bundle
+{
+	int			*pid_s;
+	t_pipe		*pipe_s;
+	t_process	*proc;
+};
 
 t_pipe	get_pipe(void)
 {
@@ -59,65 +66,44 @@ void	redirect_io(int ac, char **av)
 	close(fd[1]);
 }
 
-void	execute_command(char **cmd, char *path, char **envp)
+void	execute_command(struct s_bundle bundle, char **envp, int ac, int i)
 {
-	t_pipe	pipe;
-	int		pid;
 
-	pipe = get_pipe();
-	pid = fork();
-	if (pid)
-	{
-		close(pipe.out);
-		dup2(pipe.in, STDIN_FILENO);
-		close(pipe.in);
-		wait(NULL);
-	}
-	else
-	{
-		close(pipe.in);
-		dup2(pipe.out, STDOUT_FILENO);
-		close(pipe.out);
-		exit(execve(path, cmd, envp));
-	}
 }
 
 void	loop(int ac, char **av, char **envp, char **path)
 {
-	t_pipe		*pip_arr;
-	int			*pid_arr;
-	t_process	proc;
-	int			i;
+	int				i;
+	struct s_bundle	bundle;
 
-	pip_arr = (t_pipe *)malloc((ac - 2) * sizeof(t_pipe));
-	pid_arr = (int *)malloc((ac - 1) * sizeof(int));
-	pipe_init(pip_arr, ac - 2);
+	bundle.pipe_s = (t_pipe *)malloc((ac - 2) * sizeof(t_pipe));
+	bundle.pid_s = (int *)malloc((ac - 1) * sizeof(int));
+	pipe_init(bundle.pipe_s, ac - 2);
 	i = 0;
 	while (i < ac - 1)
 	{
-		proc = get_process(path, *(av + i));
-		pid_arr[i] = fork();
-		if (pid_arr[i] == 0)
+		bundle.proc = get_process(path, *(av + i));
+		bundle.pid_s[i] = fork();
+		if (bundle.pid_s[i] == 0)
 		{
 			if (i == 0)
-				dup2(pip_arr[i].out, STDOUT_FILENO);
+				dup2(bundle.pipe_s[i].out, STDOUT_FILENO);
 			else if (i == (ac - 2))
-				dup2(pip_arr[i - 1].in, STDIN_FILENO);
+				dup2(bundle.pipe_s[i - 1].in, STDIN_FILENO);
 			else
 			{
-				dup2(pip_arr[i - 1].in, STDIN_FILENO);
-				dup2(pip_arr[i].out, STDOUT_FILENO);
+				dup2(bundle.pipe_s[i - 1].in, STDIN_FILENO);
+				dup2(bundle.pipe_s[i].out, STDOUT_FILENO);
 			}
-			pipe_close(pip_arr, ac - 2);
-			exit(execve(proc.path, proc.cmd, envp));
+			pipe_close(bundle.pipe_s, ac - 2);
+			exit(execve(bundle.proc->path, bundle.proc->cmd, envp));
 		}
 		i ++;
-		proc_zero(&proc);
+		proc_zero(bundle.proc);
 	}
-	pipe_close(pip_arr, ac - 1);
+	pipe_close(bundle.pipe_s, ac - 1);
 	while(wait(NULL) != -1)
 		;
-	free(pip_arr);
-	free(pid_arr);
+	free(bundle.pid_s);
+	free(bundle.pipe_s);
 }
-

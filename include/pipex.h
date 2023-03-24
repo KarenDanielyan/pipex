@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 19:12:18 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/24 20:26:45 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/24 20:45:58 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,6 @@ void		pipe_close(t_pipe *pip_arr, int len);
 
 void		pipe_init(t_pipe *pip_ptr, int len);
 t_pipe		get_pipe(void);
-t_process	get_process(char **path, char *av);
+t_process	*get_process(char **path, char *av);
 
 #endif

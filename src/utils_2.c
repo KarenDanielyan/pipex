@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 16:53:29 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/24 20:20:41 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/24 20:43:35 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,18 @@ void	proc_zero(t_process *proc)
 	free_2d(proc->cmd);
 	proc->cmd = NULL;
 	proc->path = NULL;
+	free(proc);
 }
 
-t_process	get_process(char **path, char *av)
+t_process	*get_process(char **path, char *av)
 {
 	char		**cmd;
 	char		*path_to;
-	t_process	process;
+	t_process	*process;
 
+	process = (t_process *)malloc(sizeof(t_process));
 	cmd = ft_split(av, ' ');
-	if (!cmd)
+	if (!cmd || !process)
 	{
 		perror("Malloc ");
 		exit(EXIT_FAILURE);
@@ -40,7 +42,7 @@ t_process	get_process(char **path, char *av)
 		perror("Access: ");
 		exit(EXIT_FAILURE);
 	}
-	process.cmd = cmd;
-	process.path = path_to;
+	process->cmd = cmd;
+	process->path = path_to;
 	return (process);
 }
