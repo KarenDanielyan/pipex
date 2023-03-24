@@ -10,7 +10,7 @@ SRC_B		=	./src_b
 
 DEP			=	$(wildcard include/*.h) Makefile
 
-SCS			=	main.c pipes.c utils_1.c utils_2.c \
+SCS			=	main.c pipes.c logic.c process.c \
 				utils.c
 
 SCS_B		=	here_doc_bonus.c get_next_line_bonus.c \

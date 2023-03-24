@@ -6,13 +6,12 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 16:53:29 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/24 20:43:35 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/25 01:25:39 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
 #include "pipex.h"
-
 
 void	proc_zero(t_process *proc)
 {
