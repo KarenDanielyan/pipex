@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 19:12:18 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/23 19:22:04 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/24 20:21:43 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,10 @@ void		redirect_io(int ac, char **av, char **path);
 void		loop(int ac, char **av, char **envp, char **path);
 
 /* Command execution and Piping */
-void		execute_command(char **cmd, char *path, char **envp);
 void		proc_zero(t_process *proc);
+void		pipe_close(t_pipe *pip_arr, int len);
 
+//t_pipe		*pipe_init(int len);
 t_pipe		get_pipe(void);
 t_process	get_process(char **path, char *av);
 

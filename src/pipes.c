@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 19:15:09 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/24 01:00:23 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/24 20:20:17 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,48 +29,15 @@ t_pipe	get_pipe(void)
 	return (pip);
 }
 
-void	execute_command(char **cmd, char *path, char **envp)
+void	pipe_close(t_pipe	*p_arr, int len)
 {
-	t_pipe	pipe;
-	int		pid;
+	int	i;
 
-	pipe = get_pipe();
-	pid = fork();
-	if (pid)
+	i = 0;
+	while (i < len)
 	{
-		close(pipe.out);
-		dup2(pipe.in, STDIN_FILENO);
-		close(pipe.in);
-		wait(NULL);
-	}
-	else
-	{
-		close(pipe.in);
-		dup2(pipe.out, STDOUT_FILENO);
-		close(pipe.out);
-		exit(execve(path, cmd, envp));
-	}
-}
-
-void	loop(int ac, char **av, char **envp, char **path)
-{
-	int			i;
-	int			pid;
-	t_process	proc;
-
-	i = 2;
-	while (i < (ac - 1))
-	{
-		proc = get_process(path, av[i]);
-		if (i < (ac - 2))
-			execute_command(proc.cmd, proc.path, envp);
-		else
-		{
-			pid = fork();
-			if (!pid)
-				exit(execve(proc.path, proc.cmd, envp));
-		}
-		proc_zero(&proc);
+		close((p_arr + i)->in);
+		close((p_arr + i)->out);
 		i ++;
 	}
 }
@@ -90,4 +57,47 @@ void	redirect_io(int ac, char **av)
 	dup2(fd[1], STDOUT_FILENO);
 	close(fd[0]);
 	close(fd[1]);
+}
+
+/*void	execute_command(t_process proc, t_pipe *pipe_s, int ind, int )
+{
+
+}*/
+
+void	loop(int ac, char **av, char **envp, char **path)
+{
+	int			i;
+	int			*pid_s;
+	t_pipe		*pipe_s;
+	t_process	proc;
+
+	i = 0;
+	pid_s = (int *)malloc((ac - 1) * sizeof(int));
+	pipe_s = (t_pipe *)malloc((ac - 2) * sizeof(t_pipe));
+	while (i < (ac - 1))
+	{
+		proc = get_process(path, *(av + i));
+		pid_s[i] = fork();
+		if (pid_s[i] == 0)
+		{
+			if (i == 0)
+				dup2(pipe_s[i].out, STDOUT_FILENO);
+			else if (i == (ac - 2))
+				dup2(pipe_s[i - 1].in, STDIN_FILENO);
+			else
+			{
+				dup2(pipe_s[i - 1].in, STDIN_FILENO);
+				dup2(pipe_s[i].out, STDOUT_FILENO);
+			}
+			pipe_close(pipe_s, ac - 2);
+			exit(execve(proc.path, proc.cmd, envp));
+		}
+		i ++;
+		proc_zero(&proc);
+	}
+	pipe_close(pipe_s, ac - 1);
+	while(wait(NULL) != -1)
+		;
+	free(pid_s);
+	free(pipe_s);
 }
