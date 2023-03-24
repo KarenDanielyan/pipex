@@ -6,12 +6,25 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 18:41:25 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/21 19:00:25 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/24 21:13:25 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 #include "parse.h"
+
+void	free_2d(char **ptr)
+{
+	int	i;
+
+	i = 0;
+	while (*(ptr + i))
+	{
+		free(*(ptr + i));
+		i ++;
+	}
+	free(ptr);
+}
 
 char	**get_path(char **envp)
 {

@@ -10,7 +10,7 @@ SRC_B		=	./src_b
 
 DEP			=	$(wildcard include/*.h) Makefile
 
-SCS			=	main.c pipes.c utils_1.c utils_2.c \
+SCS			=	main.c pipes.c logic.c utils_2.c \
 				utils.c
 
 SCS_B		=	here_doc_bonus.c get_next_line_bonus.c \
@@ -30,7 +30,7 @@ CC 			= 	cc
 
 RM			=	rm -rf
 
-CF			=	-g # -fsanitize=address -Wall -Wextra -Werror
+CF			=	-g -fsanitize=address -Wall -Wextra -Werror
 
 CFLAGS		=	$(if $(filter bonus, $(MAKECMDGOALS)), $(CF) -D BONUS, $(CF))
 

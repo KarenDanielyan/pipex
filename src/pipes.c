@@ -6,20 +6,32 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 19:15:09 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/24 20:55:37 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/24 21:30:53 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 #include "parse.h"
-#include <fcntl.h>
 
-struct	s_bundle
+t_pipe	*pipe_init(int len)
 {
-	int			*pid_s;
-	t_pipe		*pipe_s;
-	t_process	*proc;
-};
+	int		i;
+	t_pipe	*pipe_s;
+
+	i = 0;
+	pipe_s = (t_pipe *)malloc(len * sizeof(t_pipe));
+	if (!pipe_s)
+	{
+		perror("Malloc: ");
+		exit(EXIT_FAILURE);
+	}
+	while (i < len)
+	{
+		*pipe_s = get_pipe();
+		i ++;
+	}
+	return (pipe_s);
+}
 
 t_pipe	get_pipe(void)
 {
@@ -49,61 +61,3 @@ void	pipe_close(t_pipe	*p_arr, int len)
 	}
 }
 
-void	redirect_io(int ac, char **av)
-{
-	int	fd[2];
-
-	fd[0] = open(av[1], O_RDONLY);
-	fd[1] = open(av[ac - 1], O_WRONLY | O_CREAT, 0600);
-	if (fd[0] == -1 || fd[1] == -1)
-	{
-		perror("Open: ");
-		exit(EXIT_FAILURE);
-	}
-	dup2(fd[0], STDIN_FILENO);
-	dup2(fd[1], STDOUT_FILENO);
-	close(fd[0]);
-	close(fd[1]);
-}
-
-void	execute_command(struct s_bundle bundle, char **envp, int ac, int i)
-{
-
-}
-
-void	loop(int ac, char **av, char **envp, char **path)
-{
-	int				i;
-	struct s_bundle	bundle;
-
-	bundle.pipe_s = (t_pipe *)malloc((ac - 2) * sizeof(t_pipe));
-	bundle.pid_s = (int *)malloc((ac - 1) * sizeof(int));
-	pipe_init(bundle.pipe_s, ac - 2);
-	i = 0;
-	while (i < ac - 1)
-	{
-		bundle.proc = get_process(path, *(av + i));
-		bundle.pid_s[i] = fork();
-		if (bundle.pid_s[i] == 0)
-		{
-			if (i == 0)
-				dup2(bundle.pipe_s[i].out, STDOUT_FILENO);
-			else if (i == (ac - 2))
-				dup2(bundle.pipe_s[i - 1].in, STDIN_FILENO);
-			else
-			{
-				dup2(bundle.pipe_s[i - 1].in, STDIN_FILENO);
-				dup2(bundle.pipe_s[i].out, STDOUT_FILENO);
-			}
-			pipe_close(bundle.pipe_s, ac - 2);
-			exit(execve(bundle.proc->path, bundle.proc->cmd, envp));
-		}
-		i ++;
-		proc_zero(bundle.proc);
-	}
-	pipe_close(bundle.pipe_s, ac - 1);
-	while(wait(NULL) != -1)
-		;
-	free(bundle.pid_s);
-	free(bundle.pipe_s);
-}
