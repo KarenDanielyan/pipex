@@ -1,18 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipes_bonus.c                                      :+:      :+:    :+:   */
+/*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/23 20:44:19 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/23 21:39:03 by kdaniely         ###   ########.fr       */
+/*   Created: 2023/03/12 19:15:09 by kdaniely          #+#    #+#             */
+/*   Updated: 2023/03/25 01:29:14 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 #include "parse.h"
 #include <fcntl.h>
+
+t_pipe	*pipe_init(int len)
+{
+	int		i;
+	t_pipe	*pipe_s;
+
+	i = 0;
+	pipe_s = (t_pipe *)malloc(len * sizeof(t_pipe));
+	if (!pipe_s)
+	{
+		perror("Malloc: ");
+		exit(EXIT_FAILURE);
+	}
+	while (i < len)
+	{
+		pipe_s[i] = get_pipe();
+		i ++;
+	}
+	return (pipe_s);
+}
 
 t_pipe	get_pipe(void)
 {
@@ -29,69 +49,25 @@ t_pipe	get_pipe(void)
 	return (pip);
 }
 
-void	execute_command(char **cmd, char *path, char **envp)
+void	pipe_close(t_pipe	*p_arr, int len)
 {
-	t_pipe	pipe;
-	int		pid;
+	int	i;
 
-	pipe = get_pipe();
-	pid = fork();
-	if (pid)
+	i = 0;
+	while (i < len)
 	{
-		close(pipe.out);
-		dup2(pipe.in, STDIN_FILENO);
-		close(pipe.in);
-		wait(NULL);
-	}
-	else
-	{
-		close(pipe.in);
-		dup2(pipe.out, STDOUT_FILENO);
-		close(pipe.out);
-		exit(execve(path, cmd, envp));
-	}
-}
-
-void	loop(int ac, char **av, char **envp, char **path)
-{
-	int			i;
-	int			pid;
-	t_process	proc;
-
-	if (get_type(*(av + 1), path) == HDOC)
-		i = 3;
-	else
-		i = 2;
-	while (i < (ac - 1))
-	{
-		proc = get_process(path, av[i]);
-		if (i < (ac - 2))
-			execute_command(proc.cmd, proc.path, envp);
-		else
-		{
-			pid = fork();
-			if (!pid)
-				exit(execve(proc.path, proc.cmd, envp));
-		}
-		proc_zero(&proc);
+		close((p_arr + i)->in);
+		close((p_arr + i)->out);
 		i ++;
 	}
 }
 
-void	redirect_io(int ac, char **av, char **path)
+void	redirect_io(int ac, char **av)
 {
 	int	fd[2];
 
-	if (get_type(*(av + 1), path) == HDOC)
-	{
-		fd[0] = open(HDOC_FILE, O_RDONLY);
-		fd[1] = open(*(av + ac -1), O_WRONLY | O_APPEND | O_CREAT, 0600);
-	}
-	else
-	{
-		fd[0] = open(*(av + 1), O_RDONLY);
-		fd[1] = open(*(av + ac -1), O_WRONLY | O_CREAT, 0600);
-	}
+	fd[0] = open(av[1], O_RDONLY);
+	fd[1] = open(av[ac - 1], O_TRUNC | O_WRONLY | O_CREAT, 0600);
 	if (fd[0] == -1 || fd[1] == -1)
 	{
 		perror("Open: ");

@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 22:23:36 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/25 01:55:49 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/25 02:13:51 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include "pipex.h"
 #include "parse.h"
 
-#define HDOC_FILE	"./hdoc_tmp"
 #define INVAL_LIMIT		"Error: Invalid Limiter for here_doc.\n"
 #define INTERNAL_MSG	"Internal Error: Unable to perform here_doc.\n"
 

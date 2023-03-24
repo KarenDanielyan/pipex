@@ -13,10 +13,9 @@ DEP			=	$(wildcard include/*.h) Makefile
 SCS			=	logic.c main.c pipes.c process.c \
 				utils.c
 
-SCS_B		=	here_doc_bonus.c get_next_line_bonus.c \
-				get_next_line_utils_bonus.c main_bonus.c \
-				pipes_bonus.c utils_bonus_1.c \
-				utils_bonus_2.c utils_bonus.c
+SCS_B		=	get_next_line_bonus.c get_next_line_utils_bonus.c \
+				here_doc_bonus.c logic_bonus.c main_bonus.c \
+				pipes_bonus.c process_bonus.c utils_bonus.c
 
 SRCS		=	$(patsubst %.c, $(SRC)/%.c, $(SCS))
 

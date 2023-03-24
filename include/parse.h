@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 19:00:47 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/25 02:09:40 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/25 02:32:26 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@
 void	parse(int ac, char **av);
 # else
 
-void	parse(int ac, char **av, char **path);
+/*	NOTE: In this case parse return value to specify,
+*	if input arguments contained here_doc or not.
+*/
+int	parse(int ac, char **av, char **path);
 # endif
 
 /*

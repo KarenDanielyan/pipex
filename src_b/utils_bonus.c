@@ -1,17 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_bonus.c                                      :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/23 20:42:00 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/23 21:39:35 by kdaniely         ###   ########.fr       */
+/*   Created: 2023/03/16 18:41:25 by kdaniely          #+#    #+#             */
+/*   Updated: 2023/03/25 01:25:26 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 #include "parse.h"
+
+void	free_2d(char **ptr)
+{
+	int	i;
+
+	i = 0;
+	while (*(ptr + i))
+	{
+		free(*(ptr + i));
+		i ++;
+	}
+	free(ptr);
+}
 
 char	**get_path(char **envp)
 {

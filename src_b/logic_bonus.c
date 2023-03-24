@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   logic.c                                            :+:      :+:    :+:   */
+/*   logic_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 16:58:55 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/25 02:30:23 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/25 02:32:21 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,18 +50,24 @@ static void	execute_command(struct s_bundle bundle, char **envp,
 	exit(execve(bundle.proc->path, bundle.proc->cmd, envp));
 }
 
-void	parse(int ac, char **av)
+int	parse(int ac, char **av, char **path)
 {
-	if (ac != 5)
+	int	rv;
+
+	rv = 0;
+	if (ac < 5)
 	{
-		ft_putstr_fd("Pipex: ", STDERR_FILENO);
-		if (ac < 5)
-			ft_putendl_fd("Insufficient number of agruments.", STDERR_FILENO);
-		if (ac > 5)
-			ft_putendl_fd(strerror(E2BIG), STDERR_FILENO);
+		ft_putstr_fd("Pipex: Insufficient number of agruments.", STDERR_FILENO);
 		exit(EXIT_FAILURE);
 	}
-	redirect_io(ac, av);
+	if (get_type(*(av + 1), path) == HDOC)
+	{
+		rv = 1;
+		hdoc_checker(ac, av);
+		hdoc_handler(*(av + 2));
+	}
+	redirect_io(ac, av, path);
+	return (rv);
 }
 
 void	loop(int cmd_count, char **av, char **envp, char **path)
