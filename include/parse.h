@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 19:00:47 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/25 01:28:06 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/25 01:54:03 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,13 @@
 # include <errno.h>
 
 /* Main function */
+# ifndef BONUS
+
 void	parse(int ac, char **av);
+# else
+
+void	parse(int ac, char **av, char **path);
+# endif
 /*
 *	To differenciate between arguments provided by end-user
 *	We propose types enumerable that consists of following:

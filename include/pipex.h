@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 19:12:18 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/25 01:11:40 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/25 01:54:24 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,14 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <sys/wait.h>
+
+/* here_doc in case of bonus */
+# ifdef BONUS
+#  define HDOC_FILE "./hdoc_tmp"
+void	hdoc_checker(int ac, char **av)
+void	hdoc_handler(char *limiter)
+# endif
+
 
 /*
 *	pipe(fd) writes in fd[2] input and output file
@@ -45,7 +53,7 @@ void		redirect_io(int ac, char **av);
 void		loop(int ac, char **av, char **envp, char **path);
 
 /* Command execution and Piping */
-void		proc_zero(t_process *proc);
+void		proc_free(t_process *proc);
 void		pipe_close(t_pipe *pip_arr, int len);
 
 t_pipe		*pipe_init(int len);

@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 16:58:55 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/25 01:35:44 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/25 01:56:39 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	loop(int cmd_count, char **av, char **envp, char **path)
 		if (bundle.pid_s[i] == 0)
 			execute_command(bundle, envp, cmd_count, i);
 		i ++;
-		proc_zero(bundle.proc);
+		proc_free(bundle.proc);
 	}
 	pipe_close(bundle.pipe_s, (cmd_count - 1));
 	while (wait(NULL) != -1)
