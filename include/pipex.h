@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 19:12:18 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/24 21:24:48 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/24 23:22:10 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdlib.h>
-# ifdef LINUX
-#  define <sys/wait.h>
-# endif
+# include <sys/wait.h>
 
 /*
 *	pipe(fd) writes in fd[2] input and output file

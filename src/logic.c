@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 16:58:55 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/24 21:31:13 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/24 23:28:11 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,11 @@ void	loop(int ac, char **av, char **envp, char **path)
 		bundle.proc = get_process(path, *(av + i + 1));
 		bundle.pid_s[i] = fork();
 		if (bundle.pid_s[i] == 0)
-			execute_command(bundle, envp, ac - 2, i);
+			execute_command(bundle, envp, ac, i);
 		i ++;
 		proc_zero(bundle.proc);
 	}
-	pipe_close(bundle.pipe_s, ac - 1);
+	pipe_close(bundle.pipe_s, ac - 2);
 	while(wait(NULL) != -1)
 		;
 	free(bundle.pid_s);
