@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:11:53 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/24 20:22:35 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/24 20:27:58 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ void	pipe_init(t_pipe *p_arr, int len)
 	}
 }
 
-int	main(int ac, char **argv, char **envp)
+int	main(int ac, char **av, char **envp)
 {
 	char		**path;
-	char		**av;
+/*	char		**av;
 	t_pipe		*pip_arr;
 	int			*pid_arr;
 	t_process	proc;
@@ -69,6 +69,9 @@ int	main(int ac, char **argv, char **envp)
 		;
 	free(pip_arr);
 	free(pid_arr);
+*/
+	path = get_path(envp);
+	loop(ac, (av + 1), envp, path);
 	free_2d(path);
 	return (0);
 }

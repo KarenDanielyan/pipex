@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 19:12:18 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/24 20:21:43 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/24 20:26:45 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,6 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-
-/*	here_doc in case it's bonus project */
-# ifdef BONUS
-#  define HDOC_FILE	"./hdoc_tmp"
-
-void	hdoc_checker(int ac, char **av);
-void	hdoc_handler(char *limiter);
-# endif
 
 /*
 *	pipe(fd) writes in fd[2] input and output file
@@ -48,18 +40,14 @@ typedef struct s_process
 }	t_process;
 
 /* Main logic */
-# ifndef BONUS
 void		redirect_io(int ac, char **av);
-# else
-void		redirect_io(int ac, char **av, char **path);
-# endif
 void		loop(int ac, char **av, char **envp, char **path);
 
 /* Command execution and Piping */
 void		proc_zero(t_process *proc);
 void		pipe_close(t_pipe *pip_arr, int len);
 
-//t_pipe		*pipe_init(int len);
+void		pipe_init(t_pipe *pip_ptr, int len);
 t_pipe		get_pipe(void);
 t_process	get_process(char **path, char *av);
 
