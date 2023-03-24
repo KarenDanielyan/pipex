@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 19:15:09 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/25 00:15:14 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/25 00:45:40 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,40 +66,42 @@ void	redirect_io(int ac, char **av)
 	close(fd[1]);
 }
 
-void	execute_command(struct s_bundle bundle, char **envp, int ac, int i)
+void	execute_command(struct s_bundle bundle, char **envp, int cmd_count, int i)
 {
 	if (i == 0)
+	{
 		dup2(bundle.pipe_s[i].out, STDOUT_FILENO);
-	else if (i == (ac - 2))
+	}
+	else if (i == (cmd_count - 1))
 		dup2(bundle.pipe_s[i - 1].in, STDIN_FILENO);
 	else
 	{
 		dup2(bundle.pipe_s[i - 1].in, STDIN_FILENO);
 		dup2(bundle.pipe_s[i].out, STDOUT_FILENO);
 	}
-	pipe_close(bundle.pipe_s, ac - 2);
+	pipe_close(bundle.pipe_s, (cmd_count - 1));
 	exit(execve(bundle.proc->path, bundle.proc->cmd, envp));
 }
 
-void	loop(int ac, char **av, char **envp, char **path)
+void	loop(int cmd_cout, char **av, char **envp, char **path)
 {
 	int				i;
 	struct s_bundle	bundle;
 
-	bundle.pipe_s = (t_pipe *)malloc((ac - 2) * sizeof(t_pipe));
-	bundle.pid_s = (int *)malloc((ac - 1) * sizeof(int));
-	pipe_init(bundle.pipe_s, ac - 2);
+	bundle.pipe_s = (t_pipe *)malloc((cmd_cout - 1) * sizeof(t_pipe));
+	bundle.pid_s = (int *)malloc(cmd_cout * sizeof(int));
+	pipe_init(bundle.pipe_s, (cmd_cout - 1));
 	i = 0;
-	while (i < ac - 1)
+	while (i < cmd_cout)
 	{
 		bundle.proc = get_process(path, *(av + i));
 		bundle.pid_s[i] = fork();
 		if (bundle.pid_s[i] == 0)
-			execute_command(bundle, envp, ac, i);
+			execute_command(bundle, envp, cmd_cout, i);
 		i ++;
 		proc_zero(bundle.proc);
 	}
-	pipe_close(bundle.pipe_s, ac - 1);
+	pipe_close(bundle.pipe_s, (cmd_cout - 1));
 	while(wait(NULL) != -1)
 		;
 	free(bundle.pid_s);

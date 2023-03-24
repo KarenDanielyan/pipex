@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 19:12:18 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/24 23:58:14 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/25 00:41:40 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <sys/wait.h>
+
 /*
 *	pipe(fd) writes in fd[2] input and output file
 *	descriptors. To not address in and out as fd[0]
