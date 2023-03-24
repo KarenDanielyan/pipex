@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 19:15:09 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/24 20:55:37 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/25 00:15:14 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,17 @@ void	redirect_io(int ac, char **av)
 
 void	execute_command(struct s_bundle bundle, char **envp, int ac, int i)
 {
-
+	if (i == 0)
+		dup2(bundle.pipe_s[i].out, STDOUT_FILENO);
+	else if (i == (ac - 2))
+		dup2(bundle.pipe_s[i - 1].in, STDIN_FILENO);
+	else
+	{
+		dup2(bundle.pipe_s[i - 1].in, STDIN_FILENO);
+		dup2(bundle.pipe_s[i].out, STDOUT_FILENO);
+	}
+	pipe_close(bundle.pipe_s, ac - 2);
+	exit(execve(bundle.proc->path, bundle.proc->cmd, envp));
 }
 
 void	loop(int ac, char **av, char **envp, char **path)
@@ -85,19 +95,7 @@ void	loop(int ac, char **av, char **envp, char **path)
 		bundle.proc = get_process(path, *(av + i));
 		bundle.pid_s[i] = fork();
 		if (bundle.pid_s[i] == 0)
-		{
-			if (i == 0)
-				dup2(bundle.pipe_s[i].out, STDOUT_FILENO);
-			else if (i == (ac - 2))
-				dup2(bundle.pipe_s[i - 1].in, STDIN_FILENO);
-			else
-			{
-				dup2(bundle.pipe_s[i - 1].in, STDIN_FILENO);
-				dup2(bundle.pipe_s[i].out, STDOUT_FILENO);
-			}
-			pipe_close(bundle.pipe_s, ac - 2);
-			exit(execve(bundle.proc->path, bundle.proc->cmd, envp));
-		}
+			execute_command(bundle, envp, ac, i);
 		i ++;
 		proc_zero(bundle.proc);
 	}
