@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 19:12:18 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/25 01:54:24 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/25 02:10:43 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,14 @@ typedef struct s_process
 }	t_process;
 
 /* Main logic */
+# ifndef BONUS
+
 void		redirect_io(int ac, char **av);
+# else
+
+void		redirect_io(int ac, char **av, char **path);
+# endif
+
 void		loop(int ac, char **av, char **envp, char **path);
 
 /* Command execution and Piping */
