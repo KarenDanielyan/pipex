@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 19:15:09 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/25 17:47:24 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/25 18:19:19 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,10 @@ t_pipe	redirect_io(int ac, char **av, char **path)
 		fd[0] = open(*(av + 1), O_RDONLY);
 		fd[1] = open(*(av + ac -1), O_WRONLY | O_TRUNC | O_CREAT, 0600);
 	}
-	if (fd[0] == -1 || fd[1] == -1)
-		perror("Open: ");
+	if (fd[0] == -1)
+		perror("Open");
+	if (fd[1] == -1)
+		perror("Open");
 	pip.in = fd[0];
 	pip.out = fd[1];
 	return (pip);
