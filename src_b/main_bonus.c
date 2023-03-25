@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:11:53 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/25 02:47:21 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/25 13:18:55 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,5 @@ int	main(int ac, char **av, char **envp)
 	if (offset == 3)
 		unlink(HDOC_FILE);
 	free_2d(path);
-	pause();
 	return (0);
 }
