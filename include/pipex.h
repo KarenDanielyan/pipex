@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 19:12:18 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/25 14:00:57 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/25 16:44:14 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,16 @@ typedef struct s_pipe
 	int	out;
 }	t_pipe;
 
+/* NOTE: Fuck norminette */
+typedef struct s_args
+{
+	int		ac;
+	char	**av;
+	char	**envp;
+	char	**path;
+	t_pipe	pip;
+}	t_args;
+
 /*
 *	Process structure to contain path to executable
 *	and command arguments. Point is to make code more
@@ -53,12 +63,13 @@ typedef struct s_process
 # ifndef BONUS
 
 void		redirect_io(int ac, char **av);
+void		loop(int ac, char **av, char **envp, char **path);
 # else
 
-void		redirect_io(int ac, char **av, char **path);
+t_pipe		redirect_io(int ac, char **av, char **path);
+void		loop(t_args args, int cmd_count);
 # endif
 
-void		loop(int ac, char **av, char **envp, char **path);
 
 /* Command execution and Piping */
 void		pipe_close(t_pipe *pip_arr, int len);

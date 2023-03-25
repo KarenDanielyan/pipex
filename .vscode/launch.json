@@ -34,7 +34,7 @@
       "name": "C/C++ Runner: Debug Session",
       "type": "cppdbg",
       "request": "launch",
-      "args": ["koko", "ls -l"],
+      "args": ["/dev/stdin", "ls -l", "wc -l", "/dev/stdout"],
       "stopAtEntry": false,
       "externalConsole": false,
       "cwd": "${workspaceFolder}",
