@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 22:23:36 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/25 02:13:51 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/25 20:38:30 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,14 @@ static void	arg_check(int limit_len, int fd)
 	}
 }
 
+static	int	len_handler(int str_len, int limit_len)
+{
+	if ((str_len - 1) > limit_len)
+		return (str_len - 1);
+	else
+		return (limit_len);
+}
+
 void	hdoc_handler(char *limiter)
 {
 	int		fd;
@@ -54,12 +62,13 @@ void	hdoc_handler(char *limiter)
 	fd = open(HDOC_FILE, O_RDWR | O_APPEND | O_CREAT, 0600);
 	limit_len = ft_strlen(limiter);
 	arg_check(limit_len, fd);
-	str = get_next_line(STDIN_FILENO);
-	while (str != NULL && ft_strncmp(str, limiter, (ft_strlen(str) - 1)) != 0)
+	while (1)
 	{
+		str = get_next_line(STDIN_FILENO);
+		if (!str || ft_strncmp(str, limiter, len_handler(ft_strlen(str), limit_len)) == 0)
+			break ;
 		write(fd, str, ft_strlen(str));
 		free(str);
-		str = get_next_line(STDIN_FILENO);
 	}
 	if (str)
 		free(str);

@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 00:39:43 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/01/20 14:06:27 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/25 20:26:36 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ size_t	ft_strlen(const char *str)
 	int	len;
 
 	len = 0;
-	while (*(str + len))
-		len ++;
+	if (str)
+	{
+		while (*(str + len))
+			len ++;
+	}
 	return (len);
 }
