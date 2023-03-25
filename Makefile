@@ -35,7 +35,7 @@ CC 			= 	cc
 
 RM			=	rm -rf
 
-CF			=	-g #-fsanitize=address -Wall -Wextra -Werror
+CF			=	-g -fsanitize=address -Wall -Wextra -Werror
 
 CFLAGS		=	$(if $(filter bonus, $(MAKECMDGOALS)), $(CF) -D BONUS, $(CF))
 

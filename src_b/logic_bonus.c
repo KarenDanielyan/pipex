@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 16:58:55 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/25 14:40:42 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/25 15:28:24 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,16 @@ struct	s_bundle
 	t_pipe		*pipe_s;
 	t_process	*proc;
 };
+
+static void	check_command(char *path)
+{
+	if (!path)
+	{
+		errno = ENOENT;
+		perror("check_command()");
+		exit(EXIT_FAILURE);
+	}
+}
 
 static void	bundle_init(struct s_bundle *bundle, int cmd_count)
 {
@@ -88,7 +98,10 @@ void	loop(int cmd_count, char **av, char **envp, char **path)
 			exit(EXIT_FAILURE);
 		}
 		if (bundle.pid_s[i] == 0)
+		{
+			check_command(bundle.proc->path);
 			execute_command(bundle, envp, cmd_count, i);
+		}
 		i ++;
 		proc_free(bundle.proc);
 	}
