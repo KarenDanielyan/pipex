@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 19:15:09 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/25 16:43:48 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/25 17:47:24 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	pipe_close(t_pipe	*p_arr, int len)
 t_pipe	redirect_io(int ac, char **av, char **path)
 {
 	t_pipe	pip;
-	int	fd[2];
+	int		fd[2];
 
 	if (get_type(*(av + 1), path) == HDOC)
 	{

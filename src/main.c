@@ -6,13 +6,12 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 18:11:53 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/25 17:30:53 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/25 17:46:58 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
 #include "pipex.h"
-
 
 static t_args	args_init(int ac, char **av, char **envp)
 {
@@ -28,10 +27,10 @@ static t_args	args_init(int ac, char **av, char **envp)
 
 int	main(int ac, char **av, char **envp)
 {
-	t_args		args;
+	t_args	args;
 
 	parse(ac);
-	args = args_init(ac , av, envp);
+	args = args_init(ac, av, envp);
 	loop(args, (ac - 3));
 	free_2d(args.path);
 	return (0);
