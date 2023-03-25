@@ -6,24 +6,30 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 19:00:47 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/23 19:21:52 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/25 02:32:26 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSE_H
 # define PARSE_H
 
-#include <ft_printf.h>
-#include <libft.h>
-#include <string.h>
-#include <errno.h>
+# include <ft_printf.h>
+# include <libft.h>
+# include <string.h>
+# include <errno.h>
 
 /* Main function */
-# ifdef BONUS
-void	parse(int ac, char **av, char **path);
-# else
+# ifndef BONUS
+
 void	parse(int ac, char **av);
+# else
+
+/*	NOTE: In this case parse return value to specify,
+*	if input arguments contained here_doc or not.
+*/
+int	parse(int ac, char **av, char **path);
 # endif
+
 /*
 *	To differenciate between arguments provided by end-user
 *	We propose types enumerable that consists of following:
@@ -66,12 +72,6 @@ char	*get_file_path(char **path, char *file);
 */
 char	**get_path(char **envp);
 
-/*
-*	Description: get_type() returns the argument type of
-*	the argument, it 
-*/
-
-/* Helper Functions */
 /*
 *	Description: free_2d() frees a 2-dimensional array
 *	pointed by ptr.

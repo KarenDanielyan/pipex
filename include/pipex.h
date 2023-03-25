@@ -6,7 +6,7 @@
 /*   By: kdaniely <kdaniely@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 19:12:18 by kdaniely          #+#    #+#             */
-/*   Updated: 2023/03/24 21:24:48 by kdaniely         ###   ########.fr       */
+/*   Updated: 2023/03/25 13:51:01 by kdaniely         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,14 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdlib.h>
-# ifdef LINUX
-#  define <sys/wait.h>
+# include <sys/wait.h>
+
+/* here_doc in case of bonus */
+# ifdef BONUS
+#  define HDOC_FILE	"./hdoc_tmp"
+
+void		hdoc_checker(int ac, char **av);
+void		hdoc_handler(char *limiter);
 # endif
 
 /*
@@ -44,12 +50,19 @@ typedef struct s_process
 }	t_process;
 
 /* Main logic */
+# ifndef BONUS
+
 void		redirect_io(int ac, char **av);
+# else
+
+void		redirect_io(int ac, char **av, char **path);
+# endif
+
 void		loop(int ac, char **av, char **envp, char **path);
 
 /* Command execution and Piping */
-void		proc_zero(t_process *proc);
 void		pipe_close(t_pipe *pip_arr, int len);
+void		proc_free(t_process *proc);
 
 t_pipe		*pipe_init(int len);
 t_pipe		get_pipe(void);

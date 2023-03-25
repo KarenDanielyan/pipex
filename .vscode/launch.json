@@ -34,7 +34,7 @@
       "name": "C/C++ Runner: Debug Session",
       "type": "cppdbg",
       "request": "launch",
-      "args": ["koko", "wc -l", "toto"],
+      "args": ["koko", "ls -l"],
       "stopAtEntry": false,
       "externalConsole": false,
       "cwd": "${workspaceFolder}",
@@ -46,7 +46,8 @@
           "description": "Enable pretty-printing for gdb",
           "text": "-enable-pretty-printing",
           "ignoreFailures": true
-        }
+        },
+        {"text": "-gdb-set follow-fork-mode child"}
       ]
     }
   ]
